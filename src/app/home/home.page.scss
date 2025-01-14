@@ -25,3 +25,20 @@
 #container a {
   text-decoration: none;
 }
+
+ion-header ion-toolbar ion-title{
+  text-align:center;
+}
+
+#container ion-card ion-card-header ion-img {
+  width: 150px;
+  height: 150px;
+  margin: auto;
+  margin-top: 10%;
+  margin-bottom: 5%;
+  object-fit: cover !important;
+  border-radius: 50%;
+  border: 2px solid black;
+  overflow: hidden;
+  //overflow:hidden permite ocultar el sobrante de la imagen y adaptarlo al cuadro redondo
+}

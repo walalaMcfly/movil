@@ -14,7 +14,20 @@
   </ion-header>
 
   <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Login</ion-card-title>
+        <ion-img src="./assets/img/cell.jpg"></ion-img>
+        <ion-input
+  label="Usuario"
+  labelPlacement="floating"
+  placeholder="Ingresa un usuario valido"
+></ion-input>
+        <ion-input type="password" label="Password" value="Contraseña">
+          <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+        </ion-input>
+        <ion-button shape="round">Ingresar</ion-button>
+      </ion-card-header>
+    </ion-card>    
   </div>
 </ion-content>
