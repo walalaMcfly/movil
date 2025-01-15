@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      Home
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -18,15 +18,15 @@
       <ion-card-header>
         <ion-card-title>Login</ion-card-title>
         <ion-img src="./assets/img/cell.jpg"></ion-img>
-        <ion-input
-  label="Usuario"
-  labelPlacement="floating"
-  placeholder="Ingresa un usuario valido"
+        <ion-input label="Usuario"  [(ngModel)]="user.usuario" labelPlacement="floating" placeholder="Ingresa un usuario valido"
 ></ion-input>
-        <ion-input type="password" label="Password" value="Contraseña">
+        <ion-input type="password" label="Password" [(ngModel)]="user.password"  value="Contraseña">
           <ion-input-password-toggle slot="end"></ion-input-password-toggle>
         </ion-input>
-        <ion-button shape="round">Ingresar</ion-button>
+        <div id="cuadroMsj">
+          <ion-label>{{msj}}</ion-label>
+        </div>
+        <ion-button  (click)="conectar()" shape="round">Ingresar</ion-button>
       </ion-card-header>
     </ion-card>    
   </div>

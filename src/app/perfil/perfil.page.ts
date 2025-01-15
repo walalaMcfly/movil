@@ -12,9 +12,14 @@ export class PerfilPage implements OnInit {
   user={
   usuario:"",
   password:""
-  }
+  };
+  nombreUsuario = '';
 
-  ngOnInit() {
+  ngOnInit() { }
+  
+  ngAfterContentInit() {
+    this.user = history.state.user;
+    this.nombreUsuario = this.user.usuario;
   }
 
 }
