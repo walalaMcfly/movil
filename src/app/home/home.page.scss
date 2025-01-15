@@ -42,3 +42,18 @@ ion-header ion-toolbar ion-title{
   overflow: hidden;
   //overflow:hidden permite ocultar el sobrante de la imagen y adaptarlo al cuadro redondo
 }
+
+
+#seccionCarga {
+  padding: 2%;
+  margin: auto;
+  margin-left: 25%;
+  margin-right: 25%;
+
+}
+
+#seccionCarga mat-spinner {
+ width: 25% !important;
+ margin: auto;
+ margin-top: 3%;
+}
