@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
+import { AnimationController } from '@ionic/angular';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -16,7 +17,7 @@ export class HomePage {
   msj = '';
 
   carga = false;
-  constructor(private router: Router) {}
+  constructor(private router: Router, private animation: AnimationController) {}
 
   conectar() {
     if (this.user.usuario.length > 0 && this.user.password.length > 0) {
@@ -42,6 +43,21 @@ export class HomePage {
     } else {
       this.msj = 'Credenciales no pueden estar vacias';
     }
+  }
+ 
+  animacionLogin(){
+    const imagen = document.querySelector(
+      '#container ion-card ion-card-header ion-img'
+    )as HTMLLabelElement;
+    const animacion = this.animation.create()
+    .addElement(imagen)
+    .duration(3000)
+    .iterations(Infinity)
+    .fromTo('opacity','1','0.2')
+    .fromTo("border",'2px solid white','25px spolid red');
+
+    animacion.play()
+
   }
 
 } 
