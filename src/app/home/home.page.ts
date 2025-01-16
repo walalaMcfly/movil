@@ -60,33 +60,23 @@ export class HomePage {
     .keyframes([
       {
         offset: 0,
-        opacity: '1',
-        border: '10px solid white',
-        transform: 'translateX(0px)',
+        transform: 'scale(1)', 
       },
       {
         offset: 0.25,
-        opacity: '0.5',
-        border: '10px solid red',
-        transform: 'translateX(100px)',
+        transform: 'scale(1.2)', 
       },
       {
         offset: 0.5,
-        opacity: '1',
-        border: '10px solid blue',
-        transform: 'translateX(0px)',
+        transform: 'scale(1)', 
       },
       {
         offset: 0.75,
-        opacity: '1',
-        border: '10px solid green',
-        transform: 'translateX(-100px)',
+        transform: 'scale(0.8)', 
       },
       {
         offset: 1,
-        opacity: '1',
-        border: '10px solid cyan',
-        transform: 'translateX(0px)',
+        transform: 'scale(1)',
       },
     ]);
     animacion.play()

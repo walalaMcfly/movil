@@ -57,3 +57,13 @@ ion-header ion-toolbar ion-title{
  margin: auto;
  margin-top: 3%;
 }
+
+ion-card {
+  background: linear-gradient(
+    rgba(209, 185, 118, 0.493), /* Blanco transparente arriba */
+    rgba(65, 117, 231, 0.493)  /* Blanco más transparente abajo */
+  );
+  border-radius: 15px;
+  box-shadow: none;
+  backdrop-filter: blur(10px); /* Efecto de desenfoque opcional */
+}
