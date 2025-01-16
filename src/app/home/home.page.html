@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="warning">
     <ion-title>
-      Home
+      TeLlevoApp
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -14,7 +14,7 @@
   </ion-header>
 
   <div id="container">
-    <ion-card>
+    <ion-card color="light">
       <ion-card-header>
         <ion-card-title>Login</ion-card-title>
         <ion-img src="./assets/img/cell.jpg"></ion-img>
@@ -28,9 +28,11 @@
         </div>
         <div id="seccionCarga" *ngIf="carga">
           <ion-label>Cargando</ion-label>
-          <mat-spinner></mat-spinner>
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
         </div>
         <ion-button  (click)="conectar()" shape="round">Ingresar</ion-button>
+        <ion-button [routerLink]="[('/registro')]"  color="primary" fill="clear">No tienes cuenta? Registrate</ion-button>
+        <ion-button [routerLink]="[('/recuperar-pass')]"  color="warning" fill="clear">Recuperar Contraseña</ion-button>
       </ion-card-header>
     </ion-card>    
   </div>

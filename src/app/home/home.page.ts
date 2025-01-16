@@ -22,8 +22,8 @@ export class HomePage {
   conectar() {
     if (this.user.usuario.length > 0 && this.user.password.length > 0) {
       if(
-        this.user.usuario =='j.riquelmee' && 
-        this.user.password =='pass1234'
+        this.user.usuario =='' && 
+        this.user.password ==''
       ) {
         
 
@@ -44,6 +44,10 @@ export class HomePage {
       this.msj = 'Credenciales no pueden estar vacias';
     }
   }
+
+  ngAfterContentInit() {
+    this.animacionLogin();
+  }
  
   animacionLogin(){
     const imagen = document.querySelector(
@@ -53,9 +57,38 @@ export class HomePage {
     .addElement(imagen)
     .duration(3000)
     .iterations(Infinity)
-    .fromTo('opacity','1','0.2')
-    .fromTo("border",'2px solid white','25px spolid red');
-
+    .keyframes([
+      {
+        offset: 0,
+        opacity: '1',
+        border: '10px solid white',
+        transform: 'translateX(0px)',
+      },
+      {
+        offset: 0.25,
+        opacity: '0.5',
+        border: '10px solid red',
+        transform: 'translateX(100px)',
+      },
+      {
+        offset: 0.5,
+        opacity: '1',
+        border: '10px solid blue',
+        transform: 'translateX(0px)',
+      },
+      {
+        offset: 0.75,
+        opacity: '1',
+        border: '10px solid green',
+        transform: 'translateX(-100px)',
+      },
+      {
+        offset: 1,
+        opacity: '1',
+        border: '10px solid cyan',
+        transform: 'translateX(0px)',
+      },
+    ]);
     animacion.play()
 
   }
