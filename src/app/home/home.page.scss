@@ -60,10 +60,25 @@ ion-header ion-toolbar ion-title{
 
 ion-card {
   background: linear-gradient(
-    rgba(209, 185, 118, 0.493), /* Blanco transparente arriba */
-    rgba(65, 117, 231, 0.493)  /* Blanco más transparente abajo */
+    rgba(209, 185, 118, 0.493), 
+    rgba(65, 117, 231, 0.493)  
   );
   border-radius: 15px;
   box-shadow: none;
-  backdrop-filter: blur(10px); /* Efecto de desenfoque opcional */
 }
+
+
+#container {
+  position: relative;
+  background-image: url('/assets/img/duoclogo.png'); 
+  background-size: center;
+  background-position: center; 
+  background-repeat: no-repeat; 
+  min-height: 5vh;
+}
+
+ion-card {
+  background-color: rgba(255, 255, 255, 0.8); 
+  box-shadow: none; 
+}
+
