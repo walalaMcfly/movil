@@ -9,7 +9,7 @@ export class AuthService {
 
   login(user: string, pass: string): boolean {
     if (
-      (user == 'j.riquelmee' || user == 'jo.riquelmee@duocuc.cl') &&
+      (user == 'sos' || user == 'jo.riquelmee@duocuc.cl') &&
       pass == 'pass1234'
     ) {
       AuthService.isLogged = true;
