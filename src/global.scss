@@ -38,8 +38,12 @@
 @import "theme/variables.scss";
 @import "@angular/material/prebuilt-themes/azure-blue.css";
 
+ion-header ion-toolbar ion-title{
+  text-align:center;
+}
+
 
 
 :root {
-    --ion-background-color: #38559493;  /* Color oscuro de fondo */
+    --ion-background-color: #e6e5e5d2;  /* Color oscuro de fondo */
   }
