@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LocalStorageService } from './local-storage.service';
+import { ApiService } from './api.service';
+
 
 @Injectable({
   providedIn: 'root',
@@ -7,6 +9,7 @@ import { LocalStorageService } from './local-storage.service';
 export class AuthService {
   private static isLogged: boolean = false;
   private storage:LocalStorageService = new LocalStorageService();
+  private api: ApiService  = new ApiService();
   constructor() {}
 
   /*login(user: string, pass: string): boolean {
@@ -75,4 +78,29 @@ export class AuthService {
   logout() {
     this.storage.removeItem('conectado');
   }
+
+  loginAPI(user: string, pass: string): Promise<boolean> {
+    return new Promise((resolve) => {
+      this.api.login(user).subscribe((res: any) => {
+        if (res.length > 0) {
+          if (
+            (res[0].username == user || res[0].correo == user) &&
+            res[0].pass == pass
+          ) {
+            this.storage.setItem('conectado', JSON.stringify(res[0]));
+            resolve(true);
+          } else {
+            resolve(false);
+            console.log('Credenciales no validas');
+          }
+        } else {
+          console.log('Llamada vacia');
+        }
+      });
+    });
+  }
+
+
+  
+   
 }

@@ -25,12 +25,32 @@
 
         "conductor":[
         {
-            "id":4
+            "id":4,
+            "username":"conductor1",
+            "correo":"conductor1@gmail.com",
+            "pass":"pass1234"
         }
 
-
-        ]
         
+
+
+        ],
+        
+        "viaje":[
+            
+
+            {
+                "id_viaje":1,
+                "costoViaje":2000
+                
+
+                
+            }
+
+            
+        
+        
+        ]
         
  }
 
