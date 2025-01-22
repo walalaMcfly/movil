@@ -1,0 +1,36 @@
+ {
+        "pasajero":[
+            {
+                "id":1,
+                "username":"isidora",
+                "correo":"isiestay@gmail.com",
+                "pass":"pass1234"
+            },
+            {
+                "id":2,
+                "username":"aoba",
+                "correo":"aoba@gmail.com",
+                "pass":"sas1234"
+            },
+            {
+                "id":3,
+                "username":"omen",
+                "correo":"omen@gmail.com",
+                "pass":"sos1234"
+            }
+            
+            
+        ],
+
+
+        "conductor":[
+        {
+            "id":4
+        }
+
+
+        ]
+        
+        
+ }
+
