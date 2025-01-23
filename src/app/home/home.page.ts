@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { AnimationController } from '@ionic/angular';
 import { AuthService } from '../Servicios/auth.service';
+import { Geolocation } from '@capacitor/geolocation'
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -18,8 +19,12 @@ export class HomePage {
   msj = '';
 
   carga = false;
-  constructor(private router: Router, private animation: AnimationController,
-    private auth: AuthService
+  
+  constructor(
+    private router: Router, 
+    private animation: AnimationController,
+    private auth: AuthService,
+    private geo: Geolocation
   ) {}
 
     conectar() {
@@ -47,7 +52,13 @@ export class HomePage {
       }
     }
 
-  ngAfterContentInit() {}
+  ngAfterContentInit() {
+    Geolocation.getCurrentPosition().then((posicion) => {
+      console.log('Latitud:'+ posicion.coords.latitude);
+      console.log('Longitud: '+ posicion.coords.longitude);
+    });
+       
+  }
  
   animacionLogin(){
     const imagen = document.querySelector(

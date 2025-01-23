@@ -6,7 +6,7 @@ import { Observable, retry } from 'rxjs';
 })
 export class ApiService {
 
-  private baseURL ="http://localhost:3000/";
+  private baseURL ="http://localhost:3000";
   private http: HttpClient = inject(HttpClient);
   
   constructor() { }

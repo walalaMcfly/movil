@@ -1,9 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="warning">
     <ion-title >  TeLlevoApp </ion-title>
-    <ion-buttons slot="end">
-      <ion-back-button [routerLink]="[('/home')]" (click)="logout()"></ion-back-button>
-        </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -18,5 +15,7 @@
   <div id="container">
     <ion-title>Perfil de Usuario</ion-title>
     <ion-label>Bienvenido {{nombreUsuario}}</ion-label>
+    <br>
+    <ion-button [routerLink]="[('/home')]" (click)="logout()">salir</ion-button>
   </div>
 </ion-content>
