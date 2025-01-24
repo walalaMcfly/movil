@@ -32,8 +32,6 @@ export class RecuperarPassPage implements OnInit {
       } else {
         this.generarToast('Usuario no encontrado 😔');
       }
-    } else {
-      this.generarToast('ingrese un usuario valido');
     }
   }
 
