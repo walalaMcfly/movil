@@ -1,56 +1,49 @@
- {
-        "users":[
-            {
-                "id":1,
-                "username":"isidora",
-                "correo":"isiestay@gmail.com",
-                "pass":"pass1234"
-            },
-            {
-                "id":2,
-                "username":"aoba",
-                "correo":"aoba@gmail.com",
-                "pass":"sas1234"
-            },
-            {
-                "id":3,
-                "username":"omen",
-                "correo":"omen@gmail.com",
-                "pass":"sos1234"
-            }
-            
-            
-        ],
-
-
-        "conductor":[
-        {
-            "id":4,
-            "username":"conductor1",
-            "correo":"conductor1@gmail.com",
-            "pass":"pass1234"
-        }
-
-        
-
-
-        ],
-        
-        "viaje":[
-            
-
-            {
-                "id_viaje":1,
-                "costoViaje":2000
-                
-
-                
-            }
-
-            
-        
-        
-        ]
-        
- }
-
+{
+  "users": [
+    {
+      "id": "1",
+      "username": "isidora",
+      "correo": "isiestay@gmail.com",
+      "pass": "pass1234"
+    },
+    {
+      "id": "2",
+      "username": "aoba",
+      "correo": "aoba@gmail.com",
+      "pass": "sas1234"
+    },
+    {
+      "id": "3",
+      "username": "omen",
+      "correo": "omen@gmail.com",
+      "pass": "sos1234"
+    },
+    {
+      "id": "c1dc",
+      "username": "dios",
+      "correo": "dios",
+      "pass": "dios"
+    },
+    {
+      "id": "f054",
+      "username": "kiri",
+      "correo": "kiri@gmail.com",
+      "pass": "kiri1234"
+    }
+  ],
+  "conductor": [
+    {
+      "id": "4",
+      "username": "conductor1",
+      "correo": "conductor1@gmail.com",
+      "pass": "pass1234"
+    }
+  ],
+  "viaje": [
+    {
+      "id_viaje": 1,
+      "costoViaje": 2000,
+      "id": "0d50"
+    }
+  ]
+}

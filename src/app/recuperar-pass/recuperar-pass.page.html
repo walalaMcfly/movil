@@ -7,19 +7,24 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">recuperarPass</ion-title>
+      <ion-title size="large">Recuperar Contraseña</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <div id="container">
     <ion-card color="light">
       <ion-card-header>
-        <h1>Recuperacion de contraseña</h1>
-        <ion-input label="Usuario" label-placement="floating" fill="solid" placeholder="DuocUc"></ion-input>
-        <ion-button [routerLink]="[('/home')]">Recuperar contraseña</ion-button>
-        <ion-button [routerLink]="[('/home')]" fill="clear">volver</ion-button>
+        <h1>Recuperación de Contraseña</h1>
+        <ion-input
+          label="Usuario"
+          label-placement="floating"
+          fill="solid"
+          placeholder="Ingresa tu usuario"
+          [(ngModel)]="username"
+        ></ion-input>
+        <ion-button color="warning" (click)="recuperarContrasena()" [routerLink]="[('/home')]" >Recuperar Contraseña</ion-button>
+        <ion-button [routerLink]="[('/home')]" fill="clear">Volver</ion-button>
       </ion-card-header>
     </ion-card>
-
   </div>
 </ion-content>

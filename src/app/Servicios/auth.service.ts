@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LocalStorageService } from './local-storage.service';
 import { ApiService } from './api.service';
+import { firstValueFrom } from 'rxjs';
 
 
 @Injectable({
@@ -45,29 +46,47 @@ export class AuthService {
 
   }
 
-  registrar(user:string,correo:string,pass:string){
-
-    const listaUsuarios = this.storage.getItem('users') || []
-
-    if(listaUsuarios.find((userFind:any) => userFind.username==user || 
-    userFind.correo==correo
-    )
-    
-      ){
-        return false;
-      }
+  registrar(user: string, correo: string, pass: string) {
+    const listaUsuarios = this.storage.getItem('users') || [];
+    if (
+      listaUsuarios.find(
+        (userFind: any) =>
+          userFind.username == user || userFind.correo == correo
+      )
+    ) {
+      return false;
+    }
     const nuevoUsuario = {
-      id : listaUsuarios.lenght+1,
-      username:user,
-      correo:correo,
-      pass:pass,
+      id: listaUsuarios.length + 1,
+      username: user,
+      correo: correo,
+      pass: pass,
     };
-
+  
     listaUsuarios.push(nuevoUsuario);
     this.storage.setItem('users', listaUsuarios);
     return true;
   }
+  async registerAPI(user: string, correo: string, pass: string): Promise<boolean> {
+    const users = await firstValueFrom(this.api.listarUsuarios()); 
+  
+    const exists = users.find((us: any) => us.username === user || us.correo === correo) != null;
+    if (exists) {
+      return false; 
+    }
+    const nuevoUsuario = {
+      username: user,
+      correo: correo,
+      pass: pass,
+    };
 
+    await this.api.register(nuevoUsuario).subscribe((response) => {
+      console.log('Usuario registrado:', response);
+    });
+  
+    return true;
+  }
+  
 
   isConnected(): boolean {
     return this.storage.getItem('conectado') !== null;
@@ -100,7 +119,26 @@ export class AuthService {
     });
   }
 
+  recuperarContraseña(username: string): boolean {
+    const listaUsuarios = this.storage.getItem('users') || [];
 
+    // Buscar si el nombre de usuario existe en la base de datos
+    const usuario = listaUsuarios.find((user: any) => user.username === username);
+
+    if (usuario) {
+      // Aquí deberías enviar el correo con el enlace de recuperación
+      console.log(`Enlace de recuperación enviado al usuario: ${username}`);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // Método para obtener un usuario por su nombre de usuario
+  getUsuarioPorUsername(username: string): any {
+    const listaUsuarios = this.storage.getItem('users') || [];
+    return listaUsuarios.find((user: any) => user.username === username);
+  }
   
    
 }

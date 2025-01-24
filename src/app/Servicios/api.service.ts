@@ -17,10 +17,8 @@ export class ApiService {
       .pipe(retry(3));
   }
   
-  register(data:any):Observable<any>{
-    return this.http
-      .post(this.baseURL+'/users',data)
-      .pipe(retry(3));
+  register(data: any): Observable<any> {
+    return this.http.post(this.baseURL + '/users', data).pipe(retry(3));
   }
 
   eliminarUsuario(username:string):Observable<any>{
@@ -29,9 +27,8 @@ export class ApiService {
     .pipe(retry(3));
   }
 
-  listaUsuarios(data:any):Observable<any>{
-    return this.http.get(this.baseURL+'/users', data)
-    .pipe(retry(3));
+  listarUsuarios(): Observable<any> {
+    return this.http.get(this.baseURL + '/users').pipe(retry(3));
   }
 }
 

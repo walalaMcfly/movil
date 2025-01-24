@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
+import { AuthService } from '../Servicios/auth.service';
+import { ToastController, AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-recuperar-pass',
   templateUrl: './recuperar-pass.page.html',
@@ -8,9 +10,55 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RecuperarPassPage implements OnInit {
 
-  constructor() { }
+  username: string='';
+
+  constructor(private authService: 
+    AuthService, 
+    private toastController: 
+    ToastController,
+    private router: Router,
+    private alertController: AlertController) { }
 
   ngOnInit() {
   }
 
+  async recuperarContrasena() {
+    if (this.username.trim().length > 0) {
+      const result = await this.authService.recuperarContraseña(this.username);
+      
+      if (result) {
+        this.generarToast('Contraseña recuperada 🗿💖');
+        this.mostrarContraseñaEnAlert(this.username);
+        this.router.navigate(['/home']);
+      } else {
+        this.generarToast('Usuario no encontrado.');
+      }
+    } else {
+      this.generarToast('Por favor ingrese un nombre de usuario válido.');
+    }
+  }
+
+  async mostrarContraseñaEnAlert(username: string) {
+    const usuario = await this.authService.getUsuarioPorUsername(username);
+
+    if (usuario) {
+      const alert = await this.alertController.create({
+        header: 'Recuperación de Contraseña',
+        message: `Esta es tu contraseña: ${usuario.pass}`,
+        buttons: ['OK'],
+      });
+      await alert.present();
+    }
+  }
+
+  generarToast(mensaje: string) {
+    const toast = this.toastController.create({
+      message: mensaje,
+      duration: 5000,
+      position: 'bottom',
+    });
+    toast.then((res) => res.present());
+  }
 }
+
+
