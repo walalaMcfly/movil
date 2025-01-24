@@ -125,7 +125,6 @@ export class AuthService {
         next: (usuarios: any[]) => {
           const usuario = usuarios.find((user: any) => user.username === username);
           if (usuario) {
-            console.log(`Contraseña del usuario: ${usuario.pass}`); 
             resolve(usuario);
           } else {
             resolve(null);

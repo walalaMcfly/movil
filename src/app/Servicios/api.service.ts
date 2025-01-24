@@ -31,9 +31,6 @@ export class ApiService {
     return this.http.get(this.baseURL + '/users').pipe(retry(3));
   }
 
-  getUsuarioPorUsername(username: string): Observable<any> {
-    return this.http.get<any>(`${this.baseURL}?username=${username}`);
-  }
 }
 
 
