@@ -24,30 +24,33 @@ export class RecuperarPassPage implements OnInit {
 
   async recuperarContrasena() {
     if (this.username.trim().length > 0) {
-      const result = await this.authService.recuperarContraseña(this.username);
-      if (result) {
-        this.generarToast('Contraseña recuperada 🗿💖');
-        this.mostrarContraseñaEnAlert(this.username);
-        this.router.navigate(['/home']);
-      } else {
-        this.generarToast('Usuario no encontrado 😔');
+      try {
+        const usuario = await this.authService.recuperarContraseña(this.username);
+        if (usuario) {
+          this.generarToast('Contraseña recuperada 🗿💖');
+          this.mostrarContraseñaEnAlert(usuario.pass); 
+          this.router.navigate(['/home'])
+        } else {
+          this.generarToast('Usuario no encontrado 😔');
+        }
+      } catch (error) {
+        console.error('Error en la recuperación de contraseña:', error);
+        this.generarToast('Ocurrió un error al recuperar la contraseña 😔');
       }
+    } else {
+      this.generarToast('Por favor, ingresa un nombre de usuario 😅');
     }
   }
-
-  async mostrarContraseñaEnAlert(username: string) {
-    const usuario = await this.authService.getUsuarioPorUsername(username);
-
-    if (usuario) {
-      const alert = await this.alertController.create({
-        header: 'Te he traido tu contraseña ╰(*°▽°*)╯',
-        message: `Esta es tu contraseña 🧐: ${usuario.pass}`,
-        buttons: ['YAPII 💖🐉'],
-      });
-      await alert.present();
-    }
+  
+  async mostrarContraseñaEnAlert(password: string) {
+    const alert = await this.alertController.create({
+      header: 'Te he traído tu contraseña ╰(*°▽°*)╯',
+      message: `Esta es tu contraseña 🧐: ${password}`,
+      buttons: ['YAPII 💖🐉'],
+    });
+    await alert.present();
   }
-
+  
   generarToast(mensaje: string) {
     const toast = this.toastController.create({
       message: mensaje,
@@ -56,6 +59,7 @@ export class RecuperarPassPage implements OnInit {
     });
     toast.then((res) => res.present());
   }
+  
 }
 
 

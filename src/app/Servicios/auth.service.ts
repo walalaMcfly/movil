@@ -119,26 +119,36 @@ export class AuthService {
     });
   }
 
-  recuperarContraseña(username: string): boolean {
-    const listaUsuarios = this.storage.getItem('users') || [];
-
-    // Buscar si el nombre de usuario existe en la base de datos
-    const usuario = listaUsuarios.find((user: any) => user.username === username);
-
-    if (usuario) {
-      // Aquí deberías enviar el correo con el enlace de recuperación
-      console.log(`Enlace de recuperación enviado al usuario: ${username}`);
-      return true;
-    } else {
-      return false;
+  recuperarContraseña(username: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.api.listarUsuarios().subscribe({
+        next: (usuarios: any[]) => {
+          const usuario = usuarios.find((user: any) => user.username === username);
+          if (usuario) {
+            console.log(`Contraseña del usuario: ${usuario.pass}`); // Imprime la contraseña
+            resolve(usuario);
+          } else {
+            resolve(null); // Usuario no encontrado
+          }
+        },
+        error: (error) => {
+          console.error('Error al recuperar usuarios desde el API:', error);
+          reject(error);
+        },
+      });
+    });
+  }
+  
+  async getUsuarioPorUsername(username: string): Promise<any> {
+    try {
+      const usuarios = await firstValueFrom(this.api.listarUsuarios());
+      return usuarios.find((user: any) => user.username === username) || null;
+    } catch (error) {
+      console.error('Error al obtener usuario por username:', error);
+      return null;
     }
   }
-
-  // Método para obtener un usuario por su nombre de usuario
-  getUsuarioPorUsername(username: string): any {
-    const listaUsuarios = this.storage.getItem('users') || [];
-    return listaUsuarios.find((user: any) => user.username === username);
-  }
+  
   
    
 }
