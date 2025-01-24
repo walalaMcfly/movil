@@ -37,7 +37,6 @@ export class HomePage {
             this.carga = true;
             this.animacionLogin().play();
             this.msj = 'Conexion Exitosa';
-            /* setTimeout permite generar un delay en MS */
             setTimeout(() => {
               this.router.navigate(['/perfil'], navigationExtras);
               this.msj = '';
