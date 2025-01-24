@@ -17,20 +17,24 @@
     <ion-card color="light">
       <ion-card-header>
         <h1>Registro</h1>
+        
         <ion-input label="Usuario" [(ngModel)]="user.usuario" labelPlacement="floating"
               placeholder="Ingrese su usuario"></ion-input>
          
           <ion-item>
-            <ion-input label="Correo" [(ngModel)]="user.correo" labelPlacement="floating"
+            <ion-input  type="email"   label="Correo" ngModel
+            email   helperText="Ingresa un correo valido"
+            errorText="Correo no valido" [(ngModel)]="user.correo" labelPlacement="floating"
               placeholder="Ingrese su correo"></ion-input>
           </ion-item>
           <ion-item>
             <ion-input label="Contraseña" type="password" [(ngModel)]="user.password" labelPlacement="floating"
               placeholder="Ingrese su contraseña"></ion-input>
           </ion-item>
-          <ion-button fill="outline" shape="square" color="danger" (click)="registrar()">
-            Registrarme
+          <ion-button  color="tertiary" (click)="registrar()">Registrarme
           </ion-button>
+          <ion-button [routerLink]="[('/home')]" fill="clear">Volver</ion-button>
+          
    
       </ion-card-header>
     </ion-card>
