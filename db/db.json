@@ -29,6 +29,12 @@
       "username": "kiri",
       "correo": "kiri@gmail.com",
       "pass": "kiri1234"
+    },
+    {
+      "id": "6fd4",
+      "username": "Morita",
+      "correo": "Morita123@gmail.com",
+      "pass": "123"
     }
   ],
   "conductor": [

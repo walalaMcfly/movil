@@ -30,7 +30,7 @@ export class RecuperarPassPage implements OnInit {
         this.mostrarContraseñaEnAlert(this.username);
         this.router.navigate(['/home']);
       } else {
-        this.generarToast('Usuario no encontrado');
+        this.generarToast('Usuario no encontrado 😔');
       }
     } else {
       this.generarToast('ingrese un usuario valido');
