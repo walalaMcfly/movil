@@ -25,16 +25,15 @@ export class RecuperarPassPage implements OnInit {
   async recuperarContrasena() {
     if (this.username.trim().length > 0) {
       const result = await this.authService.recuperarContraseña(this.username);
-      
       if (result) {
         this.generarToast('Contraseña recuperada 🗿💖');
         this.mostrarContraseñaEnAlert(this.username);
         this.router.navigate(['/home']);
       } else {
-        this.generarToast('Usuario no encontrado.');
+        this.generarToast('Usuario no encontrado');
       }
     } else {
-      this.generarToast('Por favor ingrese un nombre de usuario válido.');
+      this.generarToast('ingrese un usuario valido');
     }
   }
 
@@ -43,9 +42,9 @@ export class RecuperarPassPage implements OnInit {
 
     if (usuario) {
       const alert = await this.alertController.create({
-        header: 'Recuperación de Contraseña',
-        message: `Esta es tu contraseña: ${usuario.pass}`,
-        buttons: ['OK'],
+        header: 'Te he traido tu contraseña ╰(*°▽°*)╯',
+        message: `Esta es tu contraseña 🧐: ${usuario.pass}`,
+        buttons: ['YAPII 💖🐉'],
       });
       await alert.present();
     }
