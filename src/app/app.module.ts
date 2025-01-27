@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { IonicModule, IonicRouteStrategy, IonRippleEffect } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -14,7 +14,14 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,  MatProgressSpinnerModule, MatProgressBarModule,HttpClientModule],
+  imports: [
+    IonicModule.forRoot({
+      mode: 'md',
+    animated: true,
+    rippleEffect: true,
+    hardwareBackButton: true,
+    }),
+    BrowserModule, IonicModule.forRoot(), AppRoutingModule,  MatProgressSpinnerModule, MatProgressBarModule,HttpClientModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, provideAnimationsAsync()],
   bootstrap: [AppComponent],
 })
