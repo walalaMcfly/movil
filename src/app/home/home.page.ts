@@ -24,7 +24,6 @@ export class HomePage {
     private router: Router, 
     private animation: AnimationController,
     private auth: AuthService,
-    private geo: Geolocation
   ) {}
 
     conectar() {

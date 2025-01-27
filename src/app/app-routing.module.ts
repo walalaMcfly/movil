@@ -32,9 +32,17 @@ const routes: Routes = [
   },
 
   {
+    path: 'viajes',
+    loadChildren: () => import('./viajes/viajes.module').then( m => m.ViajesPageModule)
+  },
+
+
+  {
     path: '**',
     redirectTo: 'error',
   },
+ 
+
 
 ];
 
