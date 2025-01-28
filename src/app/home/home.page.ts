@@ -17,7 +17,7 @@ export class HomePage {
   };
 
   msj = '';
-
+  selectedRole: string = ''; 
   carga = false;
   
   constructor(
@@ -26,29 +26,41 @@ export class HomePage {
     private auth: AuthService,
   ) {}
 
-    conectar() {
-      if (this.user.usuario.length > 0 && this.user.password.length > 0) {
-        this.auth.loginAPI(this.user.usuario, this.user.password).then((res) => {
-          if (res) {
-            let navigationExtras: NavigationExtras = {
-              state: { user: this.user },
-            };
-            this.carga = true;
-            this.animacionLogin().play();
-            this.msj = 'Conexion Exitosa';
-            setTimeout(() => {
-              this.router.navigate(['/perfil'], navigationExtras);
-              this.msj = '';
-              this.carga = false;
-            }, 3000);
-          } else {
-            this.msj = 'Credenciales erroneas';
-          }
-        });
-      } else {
-        this.msj = 'Credenciales no pueden estar vacias';
+  conectar() {
+    if (this.user.usuario.length > 0 && this.user.password.length > 0) {
+      if (!this.selectedRole) {
+        this.msj = 'Por favor selecciona un rol';
+        return;
       }
+  
+      this.auth.loginAPI(this.user.usuario, this.user.password).then((res) => {
+        if (res) {
+          let navigationExtras: NavigationExtras = {
+            state: { user: this.user, role: this.selectedRole }, 
+          };
+          this.carga = true;
+          this.animacionLogin().play();
+          this.msj = 'Conexión Exitosa';
+  
+          setTimeout(() => {
+            if (this.selectedRole === 'pasajero') {
+              this.router.navigate(['/perfil'], navigationExtras);
+            } else if (this.selectedRole === 'dueno') {
+              this.router.navigate(['/crear-viaje'], navigationExtras);
+            }
+  
+            this.msj = '';
+            this.carga = false;
+          }, 3000);
+        } else {
+          this.msj = 'Credenciales erróneas';
+        }
+      });
+    } else {
+      this.msj = 'Credenciales no pueden estar vacías';
     }
+  }
+  
 
   ngAfterContentInit() {
    

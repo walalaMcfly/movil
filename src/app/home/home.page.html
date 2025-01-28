@@ -25,6 +25,13 @@
         <ion-input type="password" label="Password" [(ngModel)]="user.password"  value="Contraseña">
           <ion-input-password-toggle slot="end"></ion-input-password-toggle>
         </ion-input>
+
+          <ion-label>Tipo de rol</ion-label>
+          <ion-select [(ngModel)]="selectedRole" name="role" placeholder="Selecciona tu rol" required>
+            <ion-select-option value="pasajero">Pasajero</ion-select-option>
+            <ion-select-option value="dueno">Conductor</ion-select-option>
+          </ion-select>
+        
         <div id="cuadroMsj">
           <ion-label>{{msj}}</ion-label>
         </div>

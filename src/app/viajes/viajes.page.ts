@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as mapboxgl from 'mapbox-gl';
 
 @Component({
@@ -13,7 +14,9 @@ export class ViajesPage implements OnInit {
 
   mapa!: mapboxgl.Map;
 
-  constructor() { }
+  role: string = '';
+
+  constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
 
@@ -32,10 +35,12 @@ export class ViajesPage implements OnInit {
       const coordinates = event.lngLat;
       console.log('Punto seleccionado:', coordinates);
     });
+
+
+  
   }
 
   ngAfterViewInit() {
-    // Configura Mapbox como antes...
     this.mapa.on('click', (event: mapboxgl.MapMouseEvent) => {
       const coordinates = event.lngLat;
   

@@ -36,11 +36,19 @@ const routes: Routes = [
     loadChildren: () => import('./viajes/viajes.module').then( m => m.ViajesPageModule)
   },
 
+  {
+    path: 'crear-viaje',
+    loadChildren: () => import('./crear-viaje/crear-viaje.module').then( m => m.CrearViajePageModule)
+  },
+
+ 
 
   {
     path: '**',
     redirectTo: 'error',
   },
+  
+
  
 
 
