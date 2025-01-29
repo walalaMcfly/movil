@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import { Router } from '@angular/router';
+import { ViajeService } from '../Servicios/viaje.service';
+import { AuthService } from '../Servicios/auth.service';
 
 @Component({
   selector: 'app-crear-viaje',
@@ -24,7 +26,15 @@ export class CrearViajePage implements OnInit {
     nombreUsuario = '';
     
 
-  constructor(private router: Router) { }
+    viaje = {
+      destino: '',
+      costo: 0,
+      capacidad: 0,
+      fecha: '',
+    };
+
+  constructor(private router: Router, private viajeService: ViajeService, 
+    private authService: AuthService,) { }
 
   ngOnInit() {
      (mapboxgl as any).accessToken = 'pk.eyJ1Ijoid2FsYWxhbWNmbHkiLCJhIjoiY202ZmxuMTJxMDZuajJub3RxYnRlbG5xcyJ9.x_6pVMkpvuVuTqlTn_2Fdg'; 
@@ -46,8 +56,10 @@ export class CrearViajePage implements OnInit {
 
    ngAfterViewInit() {
 
-    this.user = history.state.user;
-    this.nombreUsuario = this.user.usuario;
+    if (history.state?.user) {
+      this.user = history.state.user;
+      this.nombreUsuario = this.user.usuario;
+    }
     
       // Configura Mapbox como antes...
       this.mapa.on('click', (event: mapboxgl.MapMouseEvent) => {
@@ -107,5 +119,24 @@ export class CrearViajePage implements OnInit {
         .catch(err => console.error('Error al generar la ruta:', err));
     }
   
+
+
+    crearViaje() {
+      if (this.viaje.destino && this.viaje.costo > 0 && this.viaje.capacidad > 0 && this.viaje.fecha) {
+        this.viajeService.crearViaje(this.viaje).then(() => {
+          alert('Viaje creado exitosamente');
+          this.router.navigate(['/perfil']);
+        }).catch(err => {
+          console.error(err);
+          alert('Hubo un error al crear el viaje');
+        });
+      } else {
+        alert('Por favor completa todos los campos');
+      }
+    }
+
+
+
+
   
 }
