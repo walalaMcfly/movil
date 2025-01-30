@@ -1,8 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import * as mapboxgl from 'mapbox-gl';
-import { Router } from '@angular/router';
-import { ViajeService } from '../Servicios/viaje.service';
-import { AuthService } from '../Servicios/auth.service';
 
 @Component({
   selector: 'app-crear-viaje',
@@ -10,133 +8,73 @@ import { AuthService } from '../Servicios/auth.service';
   styleUrls: ['./crear-viaje.page.scss'],
   standalone: false,
 })
-export class CrearViajePage implements OnInit {
+export class CrearViajePage implements AfterViewInit {
+  map!: mapboxgl.Map;
+  origen: string = '';
+  destino: string = '';
+  costo!: number;
+  capacidad!: number;
+  rutaCoordenadas: any[] = [];
 
-   startPoint: mapboxgl.LngLat | null = null;
-    endPoint: mapboxgl.LngLat | null = null;
-  
-    mapa!: mapboxgl.Map;
+  constructor(private http: HttpClient) {}
 
-    user = {
-      usuario: '',
-      password: '',
-    };
-  
-  
-    nombreUsuario = '';
-    
+  ngAfterViewInit() {
+    (mapboxgl as any).accessToken = 'pk.eyJ1Ijoid2FsYWxhbWNmbHkiLCJhIjoiY202ZmxuMTJxMDZuajJub3RxYnRlbG5xcyJ9.x_6pVMkpvuVuTqlTn_2Fdg';
+    this.map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [-70.6483, -33.4569], // Coordenadas iniciales (ejemplo Santiago)
+      zoom: 10,
+    });
 
-    viaje = {
-      destino: '',
-      costo: 0,
-      capacidad: 0,
-      fecha: '',
-    };
-
-  constructor(private router: Router, private viajeService: ViajeService, 
-    private authService: AuthService,) { }
-
-  ngOnInit() {
-     (mapboxgl as any).accessToken = 'pk.eyJ1Ijoid2FsYWxhbWNmbHkiLCJhIjoiY202ZmxuMTJxMDZuajJub3RxYnRlbG5xcyJ9.x_6pVMkpvuVuTqlTn_2Fdg'; 
-    
-        this.mapa = new mapboxgl.Map({
-          container: 'map', // ID del contenedor en el HTML
-          style: 'mapbox://styles/mapbox/streets-v11', // Estilo del mapa
-          center: [-70.64722270612857, -33.44813131279552], // Coordenadas iniciales [longitud, latitud]
-          zoom: 9, // Nivel de zoom inicial
-        });
-    
-        this.mapa.addControl(new mapboxgl.NavigationControl()); // Controles de zoom
-    
-        this.mapa.on('click', (event: mapboxgl.MapMouseEvent) => {
-          const coordinates = event.lngLat;
-          console.log('Punto seleccionado:', coordinates);
-        });
+    this.map.on('click', (event) => {
+      const coords = [event.lngLat.lng, event.lngLat.lat];
+      if (!this.origen) {
+        this.origen = `${coords[1]}, ${coords[0]}`;
+      } else {
+        this.destino = `${coords[1]}, ${coords[0]}`;
+        this.obtenerRuta();
+      }
+    });
   }
 
-   ngAfterViewInit() {
+  obtenerRuta() {
+    const url = `https://api.mapbox.com/directions/v5/mapbox/driving/${this.origen};${this.destino}?geometries=geojson&access_token=TU_MAPBOX_ACCESS_TOKEN`;
+    
+    this.http.get<any>(url).subscribe((res) => {
+      this.rutaCoordenadas = res.routes[0].geometry.coordinates;
 
-    if (history.state?.user) {
-      this.user = history.state.user;
-      this.nombreUsuario = this.user.usuario;
-    }
-    
-      // Configura Mapbox como antes...
-      this.mapa.on('click', (event: mapboxgl.MapMouseEvent) => {
-        const coordinates = event.lngLat;
-    
-        if (!this.startPoint) {
-          this.startPoint = coordinates;
-          new mapboxgl.Marker({ color: 'green' })
-            .setLngLat(coordinates)
-            .addTo(this.mapa);
-          console.log('Origen:', coordinates);
-        } else if (!this.endPoint) {
-          this.endPoint = coordinates;
-          new mapboxgl.Marker({ color: 'red' })
-            .setLngLat(coordinates)
-            .addTo(this.mapa);
-          console.log('Destino:', coordinates);
-          this.generateRoute(); // Generar ruta cuando ambos puntos están seleccionados
-        }
+      this.map.addLayer({
+        id: 'route',
+        type: 'line',
+        source: {
+          type: 'geojson',
+          data: {
+            type: 'Feature',
+            properties: {},
+            geometry: {
+              type: 'LineString',
+              coordinates: this.rutaCoordenadas,
+            },
+          },
+        },
+        layout: { 'line-join': 'round', 'line-cap': 'round' },
+        paint: { 'line-color': '#ff0000', 'line-width': 5 },
       });
-    }
-    
-    // Función para generar ruta
-    generateRoute() {
-      if (!this.startPoint || !this.endPoint) return;
-    
-      const url = `https://api.mapbox.com/directions/v5/mapbox/driving/${this.startPoint.lng},${this.startPoint.lat};${this.endPoint.lng},${this.endPoint.lat}?geometries=geojson&access_token=TU_MAPBOX_ACCESS_TOKEN`;
-    
-      fetch(url)
-        .then(response => response.json())
-        .then(data => {
-          const route = data.routes[0].geometry.coordinates;
-          this.mapa.addLayer({
-            id: 'route',
-            type: 'line',
-            source: {
-              type: 'geojson',
-              data: {
-                type: 'Feature',
-                properties: {},
-                geometry: {
-                  type: 'LineString',
-                  coordinates: route,
-                },
-              },
-            },
-            layout: {
-              'line-join': 'round',
-              'line-cap': 'round',
-            },
-            paint: {
-              'line-color': '#3887be',
-              'line-width': 5,
-            },
-          });
-        })
-        .catch(err => console.error('Error al generar la ruta:', err));
-    }
-  
+    });
+  }
 
+  crearViaje() {
+    const nuevoViaje = {
+      origen: this.origen,
+      destino: this.destino,
+      costo: this.costo,
+      capacidad: this.capacidad,
+      ruta: this.rutaCoordenadas,
+    };
 
-    crearViaje() {
-      if (this.viaje.destino && this.viaje.costo > 0 && this.viaje.capacidad > 0 && this.viaje.fecha) {
-        this.viajeService.crearViaje(this.viaje).then(() => {
-          alert('Viaje creado exitosamente');
-          this.router.navigate(['/perfil']);
-        }).catch(err => {
-          console.error(err);
-          alert('Hubo un error al crear el viaje');
-        });
-      } else {
-        alert('Por favor completa todos los campos');
-      }
-    }
-
-
-
-
-  
+    this.http.post('http://localhost:3000/viajes', nuevoViaje).subscribe(() => {
+      alert('Viaje creado exitosamente');
+    });
+  }
 }

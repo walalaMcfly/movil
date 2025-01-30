@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, AfterViewInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import * as mapboxgl from 'mapbox-gl';
 
 @Component({
@@ -8,96 +8,67 @@ import * as mapboxgl from 'mapbox-gl';
   styleUrls: ['./viajes.page.scss'],
   standalone: false,
 })
-export class ViajesPage implements OnInit {
-  startPoint: mapboxgl.LngLat | null = null;
-  endPoint: mapboxgl.LngLat | null = null;
+export class ViajesPage implements AfterViewInit {
+  viajes: any[] = [];
 
-  mapa!: mapboxgl.Map;
-
-  role: string = '';
-
-  constructor(private route: ActivatedRoute, private router: Router) { }
-
-  ngOnInit() {
-
-    (mapboxgl as any).accessToken = 'pk.eyJ1Ijoid2FsYWxhbWNmbHkiLCJhIjoiY202ZmxuMTJxMDZuajJub3RxYnRlbG5xcyJ9.x_6pVMkpvuVuTqlTn_2Fdg'; 
-
-    this.mapa = new mapboxgl.Map({
-      container: 'map', // ID del contenedor en el HTML
-      style: 'mapbox://styles/mapbox/streets-v11', // Estilo del mapa
-      center: [-70.64722270612857, -33.44813131279552], // Coordenadas iniciales [longitud, latitud]
-      zoom: 9, // Nivel de zoom inicial
-    });
-
-    this.mapa.addControl(new mapboxgl.NavigationControl()); // Controles de zoom
-
-    this.mapa.on('click', (event: mapboxgl.MapMouseEvent) => {
-      const coordinates = event.lngLat;
-      console.log('Punto seleccionado:', coordinates);
-    });
-
-
-  
-  }
+  constructor(private http: HttpClient) {}
 
   ngAfterViewInit() {
-    this.mapa.on('click', (event: mapboxgl.MapMouseEvent) => {
-      const coordinates = event.lngLat;
-  
-      if (!this.startPoint) {
-        this.startPoint = coordinates;
-        new mapboxgl.Marker({ color: 'green' })
-          .setLngLat(coordinates)
-          .addTo(this.mapa);
-        console.log('Origen:', coordinates);
-      } else if (!this.endPoint) {
-        this.endPoint = coordinates;
-        new mapboxgl.Marker({ color: 'red' })
-          .setLngLat(coordinates)
-          .addTo(this.mapa);
-        console.log('Destino:', coordinates);
-        this.generateRoute(); // Generar ruta cuando ambos puntos están seleccionados
-      }
+    this.obtenerViajes();
+  }
+
+  obtenerViajes() {
+    this.http.get<any[]>('http://localhost:3000/viajes').subscribe((data) => {
+      this.viajes = data;
+      this.mostrarMapas();
     });
   }
-  
-  // Función para generar ruta
-  generateRoute() {
-    if (!this.startPoint || !this.endPoint) return;
-  
-    const url = `https://api.mapbox.com/directions/v5/mapbox/driving/${this.startPoint.lng},${this.startPoint.lat};${this.endPoint.lng},${this.endPoint.lat}?geometries=geojson&access_token=TU_MAPBOX_ACCESS_TOKEN`;
-  
-    fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        const route = data.routes[0].geometry.coordinates;
-        this.mapa.addLayer({
-          id: 'route',
-          type: 'line',
-          source: {
-            type: 'geojson',
-            data: {
-              type: 'Feature',
-              properties: {},
-              geometry: {
-                type: 'LineString',
-                coordinates: route,
+
+  mostrarMapas() {
+    (mapboxgl as any).accessToken = 'pk.eyJ1Ijoid2FsYWxhbWNmbHkiLCJhIjoiY202ZmxuMTJxMDZuajJub3RxYnRlbG5xcyJ9.x_6pVMkpvuVuTqlTn_2Fdg';
+
+    this.viajes.forEach((viaje) => {
+      setTimeout(() => {
+        const map = new mapboxgl.Map({
+          container: `map-${viaje.id}`,
+          style: 'mapbox://styles/mapbox/streets-v11',
+          center: viaje.ruta[0], // Centrar en el primer punto de la ruta
+          zoom: 10,
+        });
+
+        map.on('load', () => {
+          map.addLayer({
+            id: `route-${viaje.id}`,
+            type: 'line',
+            source: {
+              type: 'geojson',
+              data: {
+                type: 'Feature',
+                properties: {},
+                geometry: {
+                  type: 'LineString',
+                  coordinates: viaje.ruta,
+                },
               },
             },
-          },
-          layout: {
-            'line-join': 'round',
-            'line-cap': 'round',
-          },
-          paint: {
-            'line-color': '#3887be',
-            'line-width': 5,
-          },
+            layout: { 'line-join': 'round', 'line-cap': 'round' },
+            paint: { 'line-color': '#ff0000', 'line-width': 5 },
+          });
         });
-      })
-      .catch(err => console.error('Error al generar la ruta:', err));
+      }, 500);
+    });
   }
 
+  tomarViaje(viaje: any) {
+    if (viaje.capacidad > 0) {
+      viaje.capacidad -= 1;
+
+      this.http.put(`http://localhost:3000/viajes/${viaje.id}`, viaje).subscribe(() => {
+        alert('Has tomado el viaje exitosamente');
+        this.obtenerViajes();
+      });
+    } else {
+      alert('No hay cupos disponibles para este viaje');
+    }
+  }
 }
-
-

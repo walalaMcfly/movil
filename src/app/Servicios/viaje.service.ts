@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http'; // Suponiendo que usarás un backend
+import { HttpClient } from '@angular/common/http'; 
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -7,22 +7,21 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ViajeService {
 
-  private viajes: any[] = []; // Lista de viajes almacenados
-  private viajesSubject: BehaviorSubject<any[]> = new BehaviorSubject(this.viajes);
+  private apiUrl = 'http://localhost:3000/viajes';
 
+  private viajes: any[] = []; // Lista de viajes almacenados
   constructor(private http: HttpClient) {}
 
-  crearViaje(viaje: any) {
-    // Aquí deberías enviar los datos al servidor para guardarlos en una base de datos
-    return new Promise((resolve, reject) => {
-      this.viajes.push(viaje);
-      this.viajesSubject.next(this.viajes);
-      resolve(true);
-    });
+  
+  obtenerViajes() {
+    return this.http.get<any[]>(this.apiUrl);
   }
 
-  obtenerViajes() {
-    // Aquí puedes obtener los viajes desde un servidor o retornar los viajes locales
-    return this.viajesSubject.asObservable();
+  // Guardar un nuevo viaje
+  crearViaje(viaje: any) {
+    return this.http.post(this.apiUrl, viaje);
   }
-}
+  }
+
+ 
+

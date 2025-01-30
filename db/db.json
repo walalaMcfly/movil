@@ -55,19 +55,22 @@
       "id": "VSGyUUr"
     }
   ],
-  "conductor": [
+  "viajes": [
     {
-      "id": "4",
-      "username": "conductor1",
-      "correo": "conductor1@gmail.com",
-      "pass": "pass1234"
-    }
-  ],
-  "viaje": [
+      "id": "0fd4",
+      "origen": "DuocUc antionio varas",
+      "destino": "plaza de armas",
+      "costo": 2000,
+      "capacidad": 4,
+      "ruta": []
+    },
     {
-      "id_viaje": 1,
-      "costoViaje": 2000,
-      "id": "0d50"
+      "id": "9a8a",
+      "origen": "Puente alto",
+      "destino": "DuocUC Antioni Varas",
+      "costo": 2500,
+      "capacidad": 3,
+      "ruta": []
     }
   ]
 }
