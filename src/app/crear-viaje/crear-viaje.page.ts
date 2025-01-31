@@ -105,7 +105,7 @@ export class CrearViajePage implements AfterViewInit {
       ruta: this.rutaCoordenadas,
     };
 
-    this.http.post('http://localhost:3000/viajes', nuevoViaje).subscribe(() => {
+    this.http.post('https://k8pnp8fq-3000.brs.devtunnels.ms/viajes', nuevoViaje).subscribe(() => {
       this.mostrarAlerta('Viaje creado', 'Espera a que un pasajero tome su viaje');
     });
   }
@@ -120,3 +120,4 @@ export class CrearViajePage implements AfterViewInit {
     await alert.present();
   }
 }
+
