@@ -33,12 +33,14 @@ const routes: Routes = [
 
   {
     path: 'viajes',
-    loadChildren: () => import('./viajes/viajes.module').then( m => m.ViajesPageModule)
+    loadChildren: () => import('./viajes/viajes.module').then( m => m.ViajesPageModule),
+    canActivate:[authGuard],
   },
 
   {
     path: 'crear-viaje',
-    loadChildren: () => import('./crear-viaje/crear-viaje.module').then( m => m.CrearViajePageModule)
+    loadChildren: () => import('./crear-viaje/crear-viaje.module').then( m => m.CrearViajePageModule),
+    canActivate:[authGuard],
   },
 
  
