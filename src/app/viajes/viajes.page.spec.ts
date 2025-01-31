@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ViajesPage } from './viajes.page';
 import { ActivatedRoute } from '@angular/router';
-import { of } from 'rxjs'; // Para simular el valor de ActivatedRoute
+import { of } from 'rxjs'; 
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ViajesPage', () => {
   let component: ViajesPage;
@@ -9,13 +10,14 @@ describe('ViajesPage', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
       declarations: [ViajesPage],
       providers: [
         {
           provide: ActivatedRoute,
           useValue: {
-            snapshot: { paramMap: { get: () => 'some-value' } }, // Simulamos un valor en paramMap
-            queryParams: of({ id: 1 }) // O puedes simular otros parámetros
+            snapshot: { paramMap: { get: () => 'some-value' } }, 
+            queryParams: of({ id: 1 }) 
           }
         }
       ]

@@ -10,7 +10,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {  HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,7 +21,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     rippleEffect: true,
     hardwareBackButton: true,
     }),
-    BrowserModule, IonicModule.forRoot(), AppRoutingModule,  MatProgressSpinnerModule, MatProgressBarModule,HttpClientModule],
+    BrowserModule, IonicModule.forRoot(), AppRoutingModule,  MatProgressSpinnerModule, MatProgressBarModule,HttpClientModule,
+  ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, provideAnimationsAsync()],
   bootstrap: [AppComponent],
 })

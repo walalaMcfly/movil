@@ -57,20 +57,12 @@
   ],
   "viajes": [
     {
-      "id": "0fd4",
-      "origen": "DuocUc antionio varas",
-      "destino": "plaza de armas",
-      "costo": 2000,
-      "capacidad": 4,
-      "ruta": []
-    },
-    {
-      "id": "9a8a",
-      "origen": "Puente alto",
-      "destino": "DuocUC Antioni Varas",
-      "costo": 2500,
-      "capacidad": 3,
-      "ruta": []
+      "origen": "Carlos Antúnez 2260, Providencia, Santiago Metropolitan Region 7500000, Chile",
+      "destino": "Antofagasta 2164, Santiago, Santiago Metropolitan Region 8320000, Chile",
+      "costo": 5000,
+      "capacidad": 0,
+      "ruta": [],
+      "id": 1
     }
   ]
 }
